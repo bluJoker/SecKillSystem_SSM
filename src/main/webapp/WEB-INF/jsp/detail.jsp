@@ -21,6 +21,7 @@
                         <span class="glyphicon glyphicon-time"></span>
                         <!-- 展示倒计时 -->
                         <span class="glyphicon" id="seckill-box"></span>
+                    </h2>
                 </div>
             </div>
         </div>
@@ -45,7 +46,8 @@
                     <div class="modal-footer">
                         <span id="killPhoneMessage" class="glyphicon"></span>
                         <button type="button" name="killPhoneBtn" class="btn btn-success">
-                            <span class="glyphicon glyphicon-phone"></span>Submit
+                            <span class="glyphicon glyphicon-phone"></span>
+                            Submit
                         </button>
                     </div>
                 </div>
@@ -66,8 +68,17 @@
     <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/jquery-countdown/2.1.0/jquery.countdown.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
 
     <script src="/resources/script/seckill.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function(){
+            seckill.detail.init({
+                seckillId : ${seckill.seckillId},
+                startTime : ${seckill.startTime.time},
+                endTime : ${seckill.endTime.time}
+            });
+        });
+    </script>
 </html>
 
