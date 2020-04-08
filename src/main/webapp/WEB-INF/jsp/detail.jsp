@@ -70,7 +70,7 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.bootcss.com/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
 
-    <script src="/resources/script/seckill.js" type="text/javascript"></script>
+    <script src="/js_resources/script/seckill.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function(){
             seckill.detail.init({
