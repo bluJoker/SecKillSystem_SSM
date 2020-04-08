@@ -3,14 +3,32 @@
 var seckill={
     // 封装秒杀相关ajax的url
     URL : {
-
+        now : function(){
+            return '/seckill/time/now';
+        }
     },
 
-    validatePhone:function(phone){
+    validatePhone: function(phone){
         if(phone && phone.length == 11 && !isNaN(phone)){
             return true;
         }else{
             return false;
+        }
+    },
+
+    countdown: function(seckillId, nowTime, startTime, endTime){
+        var seckillBox = $('#seckill-box');
+        if(nowTime > endTime){
+            // 秒杀结束
+            seckillBox.html('秒杀结束！');
+        }else if(nowTime < startTime){
+            var killTime = new Date(startTime + 1000);
+            seckillBox.countdown(killTime, function(event){
+                var format = event.strftime('秒杀倒计时：%D天 %H时 %M分 %S秒');
+                seckillBox.html(format);
+            });
+        }else{
+
         }
     },
 
@@ -42,6 +60,17 @@ var seckill={
                     }
                 });
             }
+
+            // 已经登录
+            // 计时交互
+            $.get(seckill.URL.now(), {}, function(result){
+                if(result && result['success']){
+                    var nowTime = result['data'];
+                    seckill.countdown(seckillId, nowTime, startTime, endTime);
+                }else{
+                    console.log('result1=' + result);
+                }
+            });
         }
     }
 }
