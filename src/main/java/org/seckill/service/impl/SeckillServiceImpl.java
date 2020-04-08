@@ -2,6 +2,7 @@ package org.seckill.service.impl;
 
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessKilledDao;
+import org.seckill.dao.cache.RedisDao;
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.entity.Seckill;
@@ -32,6 +33,9 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private SuccessKilledDao successKilledDao;
 
+    @Autowired
+    private RedisDao redisDao;
+
     //    md5盐值字符串，用于混淆MD5:
 //    简单说就是为了使相同的密码拥有不同的hash值的一种手段 就是盐化
 //    MD5自身是不可逆的 但是目前网路上有很多数据库支持反查询
@@ -50,10 +54,31 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public Exposer exportSeckillUrl(long seckillId) {
-        Seckill seckill = seckillDao.queryById(seckillId);
-        if (seckill == null) {
-            return new Exposer(false, seckillId);
+        // 优化点：缓存优化
+        /**
+         * 伪代码：
+         * get from cache
+         * if null
+         *      get from db
+         *      put cache
+         * else
+         *      next logic
+         * */
+
+        // 1. 访问redis
+        Seckill seckill = redisDao.getSeckill(seckillId);
+        if (seckill == null){
+            //2. 访问MySQl数据库
+            seckill = seckillDao.queryById(seckillId);
+            if (seckill == null) {
+                return new Exposer(false, seckillId);
+            }else {
+                //3. 放入redis
+                redisDao.putSeckill(seckill);
+            }
         }
+
+
         Date startTime = seckill.getStartTime();
         Date endTime = seckill.getEndTime();
         Date nowTime = new Date();
