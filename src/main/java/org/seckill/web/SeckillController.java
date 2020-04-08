@@ -53,7 +53,7 @@ public class SeckillController {
             method = RequestMethod.POST,
             produces = {"application/json; charset=UTF-8"})
     @ResponseBody
-    public SeckillResult<Exposer> exposer(Long seckillId) {
+    public SeckillResult<Exposer> exposer(@PathVariable("seckillId") Long seckillId) {
         SeckillResult<Exposer> result;
         try {
             Exposer exposer = seckillService.exportSeckillUrl(seckillId);
@@ -70,7 +70,7 @@ public class SeckillController {
             produces = {"application/json; charset=UTF-8"})
     @ResponseBody
     public SeckillResult<SeckillExecution> execute(
-            @PathVariable("seckillID") Long seckillId,
+            @PathVariable("seckillId") Long seckillId,
             @PathVariable("md5") String md5,
             // phone是从用户浏览器的Request请求的Cookie中获取的
             @CookieValue(value = "killPhone", required = false) Long phone) {
@@ -85,16 +85,16 @@ public class SeckillController {
             return new SeckillResult<SeckillExecution>(true, execution);
         }catch (RepeatKillException e){
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStateEnum.REPEAT_KILL);
-            return new SeckillResult<SeckillExecution>(false, execution);
+            return new SeckillResult<SeckillExecution>(true, execution);
         }catch (SeckillCloseException e){
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStateEnum.END);
-            return new SeckillResult<SeckillExecution>(false, execution);
+            return new SeckillResult<SeckillExecution>(true, execution);
         }
         catch (Exception e){
             logger.error(e.getMessage(), e);
 //            result =  new SeckillResult<SeckillExecution>(false, e.getMessage());
             SeckillExecution execution = new SeckillExecution(seckillId, SeckillStateEnum.INNER_ERROR);
-            return new SeckillResult<SeckillExecution>(false, execution);
+            return new SeckillResult<SeckillExecution>(true, execution);
         }
     }
 
