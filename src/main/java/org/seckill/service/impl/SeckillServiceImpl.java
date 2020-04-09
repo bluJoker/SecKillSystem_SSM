@@ -108,18 +108,18 @@ public class SeckillServiceImpl implements SeckillService {
         Date nowTime = new Date();
 
         try {
-            // 减库存
-            int updateCount = seckillDao.reduceNumber(seckillId, nowTime);
+            // 记录购买行为
+            int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
 
-            if (updateCount <= 0) {
-                // 没有更新到记录，秒杀结束
-                throw new SeckillCloseException("seckill is closed");
+            if (insertCount <= 0) {
+                throw new RepeatKillException("seckill repeated");
             } else {
-                // 记录购买行为
-                int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
+                // 减库存
+                int updateCount = seckillDao.reduceNumber(seckillId, nowTime);
 
-                if (insertCount <= 0) {
-                    throw new RepeatKillException("seckill repeated");
+                if (updateCount <= 0) {
+                    // 没有更新到记录，秒杀结束
+                    throw new SeckillCloseException("seckill is closed");
                 } else {
                     // 秒杀成功
                     SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
