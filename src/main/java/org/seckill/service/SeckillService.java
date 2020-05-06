@@ -19,7 +19,7 @@ public interface SeckillService {
 //    秒杀开启时输出秒杀接口地址，否则输出系统时间和秒杀时间
     Exposer exportSeckillUrl(long seckillId);
 
-//    执行秒杀操作
+//    执行秒杀操作，md5用来进行秒杀验证，如果验证不通过，说明用户的url被篡改了
     SeckillExecution executeSeckill(long seckillId, long userPhone, String md5)
     throws SeckillException, RepeatKillException, SeckillCloseException;
 

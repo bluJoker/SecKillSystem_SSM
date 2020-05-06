@@ -49,6 +49,10 @@ public class SeckillController {
         return "detail";
     }
 
+//    ============================================================================
+//    ajax接口，返回json
+//    所有ajax请求统一返回SeckillResultL<T>
+
     @RequestMapping(value = "/{seckillId}/exposer",
             method = RequestMethod.POST,
             produces = {"application/json; charset=UTF-8"})
@@ -76,6 +80,7 @@ public class SeckillController {
             @CookieValue(value = "killPhone", required = false) Long phone) {
         SeckillResult<SeckillExecution> result;
 
+        // 此处可以使用springmvc valid信息
         if (phone == null){
             return new SeckillResult<SeckillExecution>(false, "手机号未注册");
         }

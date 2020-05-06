@@ -2,8 +2,11 @@ package org.seckill.dto;
 
 //暴露秒杀地址
 public class Exposer {
+
+    // 秒杀是否开启，地址是否可以暴露
     private boolean exposed;
 
+    // 一种加密措施，暴露给用户的秒杀地址是加过密的
     private String md5;
 
     private long seckillId;

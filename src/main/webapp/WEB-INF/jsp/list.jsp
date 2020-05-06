@@ -17,7 +17,7 @@
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover">
-                        <thread>
+                        <thead>
                             <tr>
                                 <th>名称</th>
                                 <th>库存</th>
@@ -26,7 +26,7 @@
                                 <th>创建时间</th>
                                 <th>详情页</th>
                             </tr>
-                        </thread>
+                        </thead>
                         <tbody>
                             <c:forEach var="sk" items="${list}">
                                 <tr>
@@ -42,6 +42,7 @@
                                         <fmt:formatDate value="${sk.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                                     </td>
                                     <td>
+                                        <!-- 超链接，作为button，弹出到/seckill/${sk.seckillId}/detail新页面-->
                                         <a class="btn btn-info" href="/seckill/${sk.seckillId}/detail" target="_blank">link</a>
                                     </td>
                                 </tr>

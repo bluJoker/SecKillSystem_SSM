@@ -64,7 +64,7 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <!-- jQuery cookie插件 -->
     <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -72,9 +72,14 @@
 
     <script src="/js_resources/script/seckill.js" type="text/javascript"></script>
     <script type="text/javascript">
+        <!-- jQuery的初始化函数 -->
         $(function(){
             seckill.detail.init({
+
+                <!-- 使用EL表达式将相关参数传递给js -->
                 seckillId : ${seckill.seckillId},
+
+                <!-- 转化为毫秒，方便js做解析 -->
                 startTime : ${seckill.startTime.time},
                 endTime : ${seckill.endTime.time}
             });

@@ -10,6 +10,8 @@
         values (#{seckillId}, #{userPhone}, 0)
     </insert>
 
+    <!-- 如果不用联接，也可以分两条sql,先查出successKilled，然后根据查到的seckill_id再去查询seckill表即可-->
+    <!-- 根据id查询SuccessKilled并携带Seckill实体-->
     <select id="queryByIdWithSeckill" resultType="SuccessKilled">
         select
           sk.seckill_id,

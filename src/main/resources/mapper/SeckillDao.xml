@@ -21,6 +21,7 @@
        where seckill_id = #{seckillId}
    </select>
 
+    <!-- 接口返回的是List<Seckill>，但在sql语句中只需要给出List中存储的类型，mybatis会自动将sql返回的结果集组装成List-->
     <select id="queryAll" resultType="Seckill">
         select seckill_id, name, number, start_time, end_time, create_time
         from seckill
